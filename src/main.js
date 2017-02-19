@@ -9,5 +9,11 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  http: {
+    root: '/root',
+    headers: {
+      Authorization: 'Basic YXBpOnBhc3N3b3Jk'
+    }
+  }
 })

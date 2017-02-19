@@ -27,7 +27,32 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      // '*': {
+      //   // target: 'http://pokeapi.co/api/v2/',
+      //   target: 'http://localhost:3000/api/v1/',
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/api': ''
+      //   }
+      // }
+      '*': {
+        target: 'http://localhost:3000',
+        secure: false,
+        rewrite: function(req) {
+          console.log('rewriting');
+          req.url = req.url.replace(/^\/api/, '');
+        },
+        bypass: function(req, res, proxyOptions) {
+          if (req.url.indexOf('api') !== 0) {
+            console.log('Skipping proxy for browser request.');
+            return '/index.html';
+          }else{
+            return false;
+          }
+        }
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

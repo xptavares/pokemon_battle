@@ -17,6 +17,12 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    <button class="btn btn-primary" v-on:click="getUsers()">Get a Users</button>
+    <ul id="example-1">
+      <li v-for="user in users">
+        {{ user.name }}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -25,7 +31,19 @@ export default {
   name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      users: []
+    }
+  },
+  methods: {
+    getUsers () {
+      this.$http.get('/users').then(response => {
+      // success callback
+        console.log(response)
+        this.users = response.body.users
+      }, response => {
+        // error callback
+      })
     }
   }
 }
