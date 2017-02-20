@@ -28,29 +28,9 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      // '*': {
-      //   // target: 'http://pokeapi.co/api/v2/',
-      //   target: 'http://localhost:3000/api/v1/',
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api': ''
-      //   }
-      // }
-      '*': {
-        target: 'http://localhost:3000',
-        secure: false,
-        rewrite: function(req) {
-          console.log('rewriting');
-          req.url = req.url.replace(/^\/api/, '');
-        },
-        bypass: function(req, res, proxyOptions) {
-          if (req.url.indexOf('api') !== 0) {
-            console.log('Skipping proxy for browser request.');
-            return '/index.html';
-          }else{
-            return false;
-          }
-        }
+      '/api': {
+        target: 'http://pokeapi.co',
+        changeOrigin: true
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
